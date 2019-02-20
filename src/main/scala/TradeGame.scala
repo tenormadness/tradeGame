@@ -41,9 +41,9 @@ object TradeGame extends App {
   ///////////////
 
   val initialTeamState = Seq(
-    TeamStrategy("example", (day, price) => -1.0),
-    TeamStrategy("all last day", (day, price) => if (day > 99.5) -100.0 else 0.0),
-    TeamStrategy("all first", (day, price) => if (day == 1) -100.0 else 0.0)
+    TeamStrategy("Slow and steady Associates", (day, price) => -1.0),
+    TeamStrategy("better late than never financial", (day, price) => if (day > 99.5) -100.0 else 0.0),
+    TeamStrategy("All in investments", (day, price) => if (day == 1) -100.0 else 0.0)
   )
 
   ///////
@@ -81,7 +81,7 @@ object TradeGame extends App {
 
   val pricePlot = Scatter(days, price, "realized price", line = Line(width = 2.0, color = Color.StringColor("red")))
 
-  Seq(noTradesPricePlot, pricePlot).plot(title = "price history")
+  Seq(noTradesPricePlot, pricePlot).plot(title = "price history", path = "./priceHistory.html")
 
   val teamPlots = teamStats.foreach { team =>
 
@@ -93,7 +93,7 @@ object TradeGame extends App {
       Scatter(days, team.held, name = "Held", line = Line(width = 2.0, color = Color.StringColor("blue"))),
       Scatter(days, team.cash, name = "Cash", line = Line(width = 2.0, color = Color.StringColor("green"))),
       Scatter(days, returns, name = "returns", line = Line(width = 4.0, color = Color.StringColor("red")))
-    ).plot(title = team.teamName + " return = " + returns.last.toString)
+    ).plot(title = team.teamName + " P$L = " + returns.last.toString, path = team.teamName + ".html")
 
   }
 
